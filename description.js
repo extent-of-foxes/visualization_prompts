@@ -21,8 +21,10 @@ function optionsMatchingBudget(budget, options) {
 // Shading
 
 patterns = ["smooth", "speckled", "pinstripe", "dappled", "checkered", "wavy", "fuzzy"];
+colors = ["white", "black", "red", "green", "blue", "yellow", "purple", "orange", "teal", "pink", "grey", "brown"];
+shades = patterns;
 if ((new URLSearchParams(window.location.search).get("shadeWith")||"").startsWith('c')) {
-    patterns = ["white", "black", "red", "green", "blue", "yellow", "purple", "orange", "teal", "pink", "grey", "brown"];
+    shades = colors;
 }
 
 // Generate stuff!
@@ -32,14 +34,14 @@ if ((new URLSearchParams(window.location.search).get("shadeWith")||"").startsWit
 simpleShapes = ["square", "circle", "pentagon", "diamond", "cross", "hexagon", "star"];
 simpleShape = {
     cost: 1,
-    generate: (budget, rand) => "a " + rand(patterns) + " " + rand(simpleShapes),
+    generate: (budget, rand) => "a " + rand(shades) + " " + rand(simpleShapes),
 }
 
 orientableShapes = ["triangle", "semicircle", "arrow", "teardrop", "chevron"];
 orientations = ["upward", "downward", "to the left", "to the right", "to the top-left", "to the top-right", "to the bottom-left", "to the bottom-right"];
 orientableShape = {
     cost: 1,
-    generate: (budget, rand) => "a " + rand(patterns) + " " + rand(orientableShapes) + " facing " + rand(orientations),
+    generate: (budget, rand) => "a " + rand(shades) + " " + rand(orientableShapes) + " facing " + rand(orientations),
 }
 
 simple2dRelations = [" above ", " below ", " to the left of ", " to the right of "];
@@ -141,7 +143,7 @@ options = [
 ];
 
 function generateDescription(budget, rand) {
-	return "A " + rand(patterns) + " background; " + rand(optionsMatchingBudget(budget, options)).generate(budget, rand);
+	return "A " + rand(shades) + " background; " + rand(optionsMatchingBudget(budget, options)).generate(budget, rand);
 }
 
 // Tests
@@ -160,7 +162,7 @@ function testAll() {
 // The `cost` calculations are not tested but they're pretty simple.
 
 function testFakeRandFirstFromPatterns_shouldBeSmooth() {
-    got = makeFakeRand([0])(patterns);
+    got = makeFakeRand([0])(shades);
     want = "smooth";
     if (got !== want) {
         console.log("testFakeRandFirstFromPatterns_shouldBeSmooth: got " + got + ", want " + want);
@@ -168,7 +170,7 @@ function testFakeRandFirstFromPatterns_shouldBeSmooth() {
 }
 
 function testFakeRandFifthFromPatterns_shouldBeWavy() {
-    got = makeFakeRand([5])(patterns);
+    got = makeFakeRand([5])(shades);
     want = "wavy";
     if (got !== want) {
         console.log("testFakeRandFifthFromPatterns_shouldBeWavy: got " + got + ", want " + want);
@@ -177,8 +179,8 @@ function testFakeRandFifthFromPatterns_shouldBeWavy() {
 
 function testFakeRand_shouldGoThroughIndices() {
     rand = makeFakeRand([0,1]);
-    ignored = rand(patterns);
-    got = rand(patterns);
+    ignored = rand(shades);
+    got = rand(shades);
     want = "speckled";
     if (got !== want) {
         console.log("testFakeRand_shouldGoThroughIndices: got " + got + ", want " + want);

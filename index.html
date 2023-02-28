@@ -1,16 +1,21 @@
 <h1>Visualization practice</h1>
 
-<p>Reload page to regenerate. <a href="index.html?shadeWith=colors">Append "?shadeWith=colors" to URL</a> to use colors instead of patterns.</p>
+<script src="description.js"></script>
+<button onclick="generate();">Regenerate</button>
+<button onclick="shades=patterns;generate();">Use patterns</button>
+<button onclick="shades=colors;generate();">Use colors</button>
 
 <h2>Simple visualization</h2> <p id="description1">error<p>
 <h2>Medium visualization</h2> <p id="description2">error<p>
 <h2>Complex visualization</h2> <p id="description3">error<p>
 <h2>Very complex visualization</h2> <p id="description4">error<p>
 
-<script src="description.js"></script>
 <script>
+function generate() {
 document.getElementById("description1").innerHTML = generateDescription(1, uniformFromList)
 document.getElementById("description2").innerHTML = generateDescription(2, uniformFromList)
 document.getElementById("description3").innerHTML = generateDescription(3, uniformFromList)
 document.getElementById("description4").innerHTML = generateDescription(4, uniformFromList)
+}
+generate();
 </script>
